@@ -1,7 +1,7 @@
 module Selenium
 	module WebDriver
 		module StaticHTML
-			module Driver
+			module DriverExt
 				def for(browser, opts = {})
 					return super unless browser == :static_html
 

@@ -3,7 +3,7 @@ module Selenium
 		module StaticHTML
 			class Http < Remote::Http::Default
 				def new_http_client
-					RubyRemoteEnd::RemoteEnd.new('StaticHTML', server_url.path)
+					RubyRemoteEnd::RemoteEnd.new(::StaticHTMLDriver, server_url.path)
 				end
 			end
 		end
