@@ -18,15 +18,48 @@ module StaticHTMLDriver
 			else
 				locator =
 					case location_strategy
+					when 'class name'
+						[:css, ".#{selector}"]
+					when 'css selector'
+						[:css, selector]
 					when 'id'
 						[:css, "##{selector}"]
-					when 'class name'
-						[:xpath, ".//*[@class='#{selector}']"]
+					when 'link text'
+						[:xpath, ".//a[text()='#{selector}']"]
+					when 'partial link text'
+						[:xpath, ".//a[contains(text(), '#{selector}')]"]
+					when 'tag name'
+						[:css, selector]
+					when 'xpath'
+						[:xpath, selector]
 					else
 						raise("Unknown location strategy - #{location_strategy}")
 					end
 				Element.new(browser.at(*locator))
 			end
+		end
+
+		def elements(location_strategy, selector)
+			locator =
+				case location_strategy
+				when 'class name'
+					[:css, ".#{selector}"]
+				when 'css selector'
+					[:css, selector]
+				when 'id'
+					[:css, "##{selector}"]
+				when 'link text'
+					[:xpath, ".//a[text()='#{selector}']"]
+				when 'partial link text'
+					[:xpath, ".//a[contains(text(), '#{selector}')]"]
+				when 'tag name'
+					[:css, selector]
+				when 'xpath'
+					[:xpath, selector]
+				else
+					raise("Unknown location strategy - #{location_strategy}")
+				end
+			browser.search(*locator).map { |node| Element.new(node) }
 		end
 
 		def close
