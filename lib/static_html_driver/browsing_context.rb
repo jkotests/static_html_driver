@@ -7,8 +7,13 @@ module StaticHTMLDriver
 		end
 
 		def goto(url)
-			file = File.read(url.sub('file://', ''))
-			@browser = ::Nokogiri::HTML.parse(file)
+			html =
+				if File.exists?(url)
+					File.read(url.sub('file://', ''))
+				else
+					url
+				end
+			@browser = ::Nokogiri::HTML.parse(html)
 		end
 
 		def element(location_strategy, selector)
@@ -60,6 +65,23 @@ module StaticHTMLDriver
 					raise("Unknown location strategy - #{location_strategy}")
 				end
 			browser.search(*locator).map { |node| Element.new(node) }
+		end
+
+		def execute_script(session, script, args)
+			# TODO: This is currently hardcoded to handle the get_attribute_value atom
+			element_id = args.first['element-6066-11e4-a52e-4f735466cecf']
+			e_ole = session.known_elements[element_id]
+			e = element(:ole_object, e_ole)
+			attr = args[1]
+			e.attribute_value(attr)
+		end
+
+		def window_handle
+			'1'
+		end
+
+		def window_handles
+			['1']
 		end
 
 		def close

@@ -1,7 +1,7 @@
 module Selenium
 	module WebDriver
 		module StaticHTML
-			class Bridge < Remote::Bridge
+			class Bridge < Remote::W3CBridge
 				attr_accessor :http
 
 				def initialize(opts = {})
