@@ -1,7 +1,7 @@
 module StaticHTMLDriver
 	class Session < RubyRemoteEnd::Session
 		def self.initialize_browser
-			BrowsingContext.new
+			Browser.new
 		end
 	end
 end

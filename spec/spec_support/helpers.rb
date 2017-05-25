@@ -1,8 +1,8 @@
 module StaticHTMLDriver
 	module SpecSupport
 		module Helpers
-			def driver
-				$driver
+			def browser
+				$browser
 			end
 		end
 	end
