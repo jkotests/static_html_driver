@@ -33,7 +33,7 @@ module StaticHTMLDriver
 				when 'tag name'
 					[:css, selector]
 				when 'xpath'
-					[:xpath, selector]
+					[:xpath, XPathBuilder.new(selector).normalize]
 				else
 					raise("Unknown location strategy - #{location_strategy}")
 				end
